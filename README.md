@@ -185,13 +185,6 @@ Highlights:
 - Security alerts (failed logins, new IP)
 - ChatOps approvals
 
-## Acknowledgements
-
-Extracted from [`jdp5949/dhan-market-data`](https://github.com/jdp5949/dhan-market-data),
-an algo trading system where this transport originally lived. The
-notification problems are the same across most production software —
-share the solution.
-
 ## Licence
 
 MIT. See [LICENSE](LICENSE).
