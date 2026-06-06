@@ -1,4 +1,4 @@
-# discord-notifier — Portability Playbook
+# discord-alert-transport — Portability Playbook
 
 Step-by-step for dropping this package into a new Python project and getting
 phone notifications within 15 minutes.
@@ -11,22 +11,22 @@ phone notifications within 15 minutes.
 cd my-new-project
 git submodule add https://github.com/jdp5949/dhan-market-data \
     vendor/dhan-market-data
-pip install -e vendor/dhan-market-data/packages/discord-notifier
+pip install -e vendor/dhan-market-data/packages/discord-alert-transport
 ```
 
 ### B. Vendor copy (no git history)
 
 ```bash
-cp -R /path/to/dhan-market-data/packages/discord-notifier vendor/discord-notifier
-pip install -e vendor/discord-notifier
+cp -R /path/to/dhan-market-data/packages/discord-alert-transport vendor/discord-alert-transport
+pip install -e vendor/discord-alert-transport
 ```
 
-### C. Direct copy of `src/discord_notifier/` into your project
+### C. Direct copy of `src/discord_alert_transport/` into your project
 
 If you don't want a pip install at all, copy the four files into your tree:
 
 ```
-your_project/discord_notifier/
+your_project/discord_alert_transport/
     __init__.py
     channels.py
     embed.py
@@ -67,7 +67,7 @@ Add a `py.typed` next to them if you want mypy to pick up the types.
 ```python
 # my_project/notify.py
 import os
-from discord_notifier import Channel, DiscordSender, Severity, build_embed, channel_for, color_for
+from discord_alert_transport import Channel, DiscordSender, Severity, build_embed, channel_for, color_for
 
 _sender = DiscordSender(
     webhooks={
@@ -173,7 +173,7 @@ Quickest verification:
 
 ```python
 # scripts/discord_smoke.py
-from discord_notifier import Channel, DiscordSender, Severity, build_embed, channel_for, color_for
+from discord_alert_transport import Channel, DiscordSender, Severity, build_embed, channel_for, color_for
 import os
 
 s = DiscordSender(

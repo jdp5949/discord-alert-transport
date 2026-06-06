@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from discord_notifier import build_embed
+from discord_alert_transport import build_embed
 
 
 def test_basic_embed():

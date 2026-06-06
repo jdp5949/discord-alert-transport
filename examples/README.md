@@ -14,7 +14,7 @@ All examples implement the same essentials:
 
 | Folder | Language | Runtime needed |
 |--------|----------|----------------|
-| [`python/`](python/) | Python 3.10+ | the `discord_notifier` package (`pip install discord-notifier`) — full-featured |
+| [`python/`](python/) | Python 3.10+ | the `discord_alert_transport` package (`pip install discord-alert-transport`) — full-featured |
 | [`javascript/`](javascript/) | Node.js 18+ | stdlib `fetch` |
 | [`typescript/`](typescript/) | TypeScript / Node 18+ | `tsx` or `tsc` |
 | [`go/`](go/) | Go 1.21+ | stdlib `net/http` |
@@ -47,5 +47,5 @@ dotnet  run --project examples/csharp/                    # add Send.csproj firs
 The Python package adds severity routing, audit mirror, secret-safe
 `__repr__`, and channel enums on top of the raw HTTP pattern. The other
 language examples here implement only the raw send. If you want feature
-parity in Node/Go/etc., port `src/discord_notifier/sender.py` — it's
+parity in Node/Go/etc., port `src/discord_alert_transport/sender.py` — it's
 ~150 lines.

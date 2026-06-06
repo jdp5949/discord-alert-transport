@@ -1,4 +1,4 @@
-title: discord-notifier
+title: discord-alert-transport
 description: Portable Discord webhook transport — Python package + multi-language reference.
 remote_theme: pages-themes/minimal@v0.2.0
 plugins:

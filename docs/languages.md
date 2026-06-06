@@ -19,16 +19,16 @@ export DISCORD_WEBHOOK="https://discord.com/api/webhooks/<id>/<token>"
 
 | Language | Runtime needed | Sample |
 |----------|----------------|--------|
-| [Python](https://github.com/jdp5949/discord/blob/main/examples/python/basic.py) | 3.10+, `pip install discord-notifier` | full package — severity routing + audit mirror + backoff |
-| [JavaScript (Node)](https://github.com/jdp5949/discord/blob/main/examples/javascript/send.js) | Node 18+, stdlib `fetch` | raw send + backoff |
-| [TypeScript](https://github.com/jdp5949/discord/blob/main/examples/typescript/send.ts) | Node 18+, `tsx` | typed embed + backoff |
-| [Go](https://github.com/jdp5949/discord/blob/main/examples/go/send.go) | Go 1.21+, stdlib `net/http` | embed + 429/5xx retry |
-| [Rust](https://github.com/jdp5949/discord/blob/main/examples/rust/send.rs) | Rust + `reqwest` + `tokio` + `serde_json` | async send + backoff |
-| [Bash](https://github.com/jdp5949/discord/blob/main/examples/bash/send.sh) | bash + curl (+ optional jq) | works anywhere curl is installed |
-| [PHP](https://github.com/jdp5949/discord/blob/main/examples/php/send.php) | PHP 8+, stdlib `curl` | embed + backoff |
-| [Ruby](https://github.com/jdp5949/discord/blob/main/examples/ruby/send.rb) | Ruby 3+, stdlib `net/http` | embed + backoff |
-| [Java](https://github.com/jdp5949/discord/blob/main/examples/java/Send.java) | Java 11+, stdlib `java.net.http` | single-file, no Maven |
-| [C# (.NET)](https://github.com/jdp5949/discord/blob/main/examples/csharp/Send.cs) | .NET 6+, stdlib `HttpClient` | typed payload + backoff |
+| [Python](https://github.com/jdp5949/discord-alert-transport/blob/main/examples/python/basic.py) | 3.10+, `pip install discord-alert-transport` | full package — severity routing + audit mirror + backoff |
+| [JavaScript (Node)](https://github.com/jdp5949/discord-alert-transport/blob/main/examples/javascript/send.js) | Node 18+, stdlib `fetch` | raw send + backoff |
+| [TypeScript](https://github.com/jdp5949/discord-alert-transport/blob/main/examples/typescript/send.ts) | Node 18+, `tsx` | typed embed + backoff |
+| [Go](https://github.com/jdp5949/discord-alert-transport/blob/main/examples/go/send.go) | Go 1.21+, stdlib `net/http` | embed + 429/5xx retry |
+| [Rust](https://github.com/jdp5949/discord-alert-transport/blob/main/examples/rust/send.rs) | Rust + `reqwest` + `tokio` + `serde_json` | async send + backoff |
+| [Bash](https://github.com/jdp5949/discord-alert-transport/blob/main/examples/bash/send.sh) | bash + curl (+ optional jq) | works anywhere curl is installed |
+| [PHP](https://github.com/jdp5949/discord-alert-transport/blob/main/examples/php/send.php) | PHP 8+, stdlib `curl` | embed + backoff |
+| [Ruby](https://github.com/jdp5949/discord-alert-transport/blob/main/examples/ruby/send.rb) | Ruby 3+, stdlib `net/http` | embed + backoff |
+| [Java](https://github.com/jdp5949/discord-alert-transport/blob/main/examples/java/Send.java) | Java 11+, stdlib `java.net.http` | single-file, no Maven |
+| [C# (.NET)](https://github.com/jdp5949/discord-alert-transport/blob/main/examples/csharp/Send.cs) | .NET 6+, stdlib `HttpClient` | typed payload + backoff |
 
 ## Minimal viable example (any language)
 
@@ -69,7 +69,7 @@ echo '{"content":"hello"}' | curl -d @- -H "Content-Type: application/json" "$UR
 | Need | Use |
 |------|-----|
 | Just send a one-off | Any language, raw HTTP |
-| Build a long-lived service | Either — port the package's ~150 LOC or `pip install discord-notifier` |
+| Build a long-lived service | Either — port the package's ~150 LOC or `pip install discord-alert-transport` |
 | Severity-routed channels + audit mirror | Python package (or port `sender.py`) |
 | Embed length limits enforced | Python `build_embed` helper |
 | Secret-safe `__repr__` / logging | Python package |
@@ -78,7 +78,7 @@ echo '{"content":"hello"}' | curl -d @- -H "Content-Type: application/json" "$UR
 ## Don't see your language?
 
 The protocol is universal. Any HTTP client + JSON serializer works.
-[PR welcome](https://github.com/jdp5949/discord/pulls) — add a sample
+[PR welcome](https://github.com/jdp5949/discord-alert-transport/pulls) — add a sample
 under `examples/<language>/`.
 
 Next: [severity routing](severity-routing.html).

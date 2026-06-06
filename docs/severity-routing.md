@@ -23,7 +23,7 @@ package, and the convention is portable to any language.
 ## Python — use the enums
 
 ```python
-from discord_notifier import (
+from discord_alert_transport import (
     Channel, DiscordSender, Severity, build_embed, channel_for, color_for,
 )
 

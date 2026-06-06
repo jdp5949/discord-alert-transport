@@ -7,7 +7,7 @@ from typing import Any
 from unittest.mock import patch
 from urllib import error as urlerror
 
-from discord_notifier import Channel, DiscordSender, build_embed
+from discord_alert_transport import Channel, DiscordSender, build_embed
 
 
 WEBHOOK_ALERTS = "https://discord.test/webhooks/111111111/aaaa-test-token-1"
@@ -69,7 +69,7 @@ def test_send_embed_success_204():
         calls.append(req.full_url)
         return _FakeResp(204)
 
-    with patch("discord_notifier.sender.urlrequest.urlopen", side_effect=fake_urlopen):
+    with patch("discord_alert_transport.sender.urlrequest.urlopen", side_effect=fake_urlopen):
         ok = sender.send_embed(Channel.ALERTS, build_embed(title="t", description="d", color=0xFF0000))
     assert ok is True
     assert WEBHOOK_ALERTS in calls
@@ -78,7 +78,7 @@ def test_send_embed_success_204():
 
 def test_send_embed_disabled_flag():
     sender = _sender(enabled=False)
-    with patch("discord_notifier.sender.urlrequest.urlopen") as up:
+    with patch("discord_alert_transport.sender.urlrequest.urlopen") as up:
         ok = sender.send_embed(Channel.ALERTS, build_embed(title="t", description="d", color=0))
     assert ok is False
     up.assert_not_called()
@@ -89,7 +89,7 @@ def test_send_embed_missing_webhook():
         webhooks={Channel.AUDIT: WEBHOOK_AUDIT},  # alerts missing
         enabled=True,
     )
-    with patch("discord_notifier.sender.urlrequest.urlopen") as up:
+    with patch("discord_alert_transport.sender.urlrequest.urlopen") as up:
         ok = sender.send_embed(Channel.ALERTS, build_embed(title="t", description="d", color=0))
     assert ok is False
     up.assert_not_called()
@@ -111,8 +111,8 @@ def test_send_embed_429_backoff_then_success():
         return item
 
     slept: list[float] = []
-    with patch("discord_notifier.sender.urlrequest.urlopen", side_effect=fake_urlopen), \
-         patch("discord_notifier.sender.time.sleep", side_effect=lambda s: slept.append(s)):
+    with patch("discord_alert_transport.sender.urlrequest.urlopen", side_effect=fake_urlopen), \
+         patch("discord_alert_transport.sender.time.sleep", side_effect=lambda s: slept.append(s)):
         ok = sender.send_embed(Channel.INFO, build_embed(title="t", description="d", color=0))
     assert ok is True
     assert any(s > 0 for s in slept), "Retry-After must trigger sleep"
@@ -124,8 +124,8 @@ def test_send_embed_429_exhausted():
     def fake_urlopen(req, timeout):
         raise _http_error(429, {"retry_after": 0.01})
 
-    with patch("discord_notifier.sender.urlrequest.urlopen", side_effect=fake_urlopen), \
-         patch("discord_notifier.sender.time.sleep"):
+    with patch("discord_alert_transport.sender.urlrequest.urlopen", side_effect=fake_urlopen), \
+         patch("discord_alert_transport.sender.time.sleep"):
         ok = sender.send_embed(Channel.DEV, build_embed(title="t", description="d", color=0))
     assert ok is False
 
@@ -136,7 +136,7 @@ def test_send_embed_4xx_drops():
     def fake_urlopen(req, timeout):
         raise _http_error(400, {"message": "Invalid form body"})
 
-    with patch("discord_notifier.sender.urlrequest.urlopen", side_effect=fake_urlopen):
+    with patch("discord_alert_transport.sender.urlrequest.urlopen", side_effect=fake_urlopen):
         ok = sender.send_embed(Channel.ALERTS, build_embed(title="t", description="d", color=0))
     assert ok is False
 
@@ -155,8 +155,8 @@ def test_send_embed_5xx_retries_once_then_succeeds():
             raise item
         return item
 
-    with patch("discord_notifier.sender.urlrequest.urlopen", side_effect=fake_urlopen), \
-         patch("discord_notifier.sender.time.sleep"):
+    with patch("discord_alert_transport.sender.urlrequest.urlopen", side_effect=fake_urlopen), \
+         patch("discord_alert_transport.sender.time.sleep"):
         ok = sender.send_embed(Channel.ALERTS, build_embed(title="t", description="d", color=0))
     assert ok is True
 
@@ -169,7 +169,7 @@ def test_audit_mirror_not_recursive():
         calls.append(req.full_url)
         return _FakeResp(204)
 
-    with patch("discord_notifier.sender.urlrequest.urlopen", side_effect=fake_urlopen):
+    with patch("discord_alert_transport.sender.urlrequest.urlopen", side_effect=fake_urlopen):
         sender.send_embed(Channel.AUDIT, build_embed(title="t", description="d", color=0))
     assert calls == [WEBHOOK_AUDIT]
 
@@ -182,19 +182,19 @@ def test_audit_mirror_disabled_via_constructor():
         calls.append(req.full_url)
         return _FakeResp(204)
 
-    with patch("discord_notifier.sender.urlrequest.urlopen", side_effect=fake_urlopen):
+    with patch("discord_alert_transport.sender.urlrequest.urlopen", side_effect=fake_urlopen):
         sender.send_embed(Channel.ALERTS, build_embed(title="t", description="d", color=0))
     assert calls == [WEBHOOK_ALERTS]
 
 
 def test_webhook_url_not_in_logs(caplog):
     sender = _sender()
-    caplog.set_level(logging.WARNING, logger="discord_notifier.sender")
+    caplog.set_level(logging.WARNING, logger="discord_alert_transport.sender")
 
     def fake_urlopen(req, timeout):
         raise _http_error(400, {})
 
-    with patch("discord_notifier.sender.urlrequest.urlopen", side_effect=fake_urlopen):
+    with patch("discord_alert_transport.sender.urlrequest.urlopen", side_effect=fake_urlopen):
         sender.send_embed(Channel.ALERTS, build_embed(title="t", description="d", color=0))
 
     secret_token = "aaaa-test-token-1"
@@ -219,7 +219,7 @@ def test_payload_shape_includes_embed_and_username():
         captured.append(json.loads(req.data.decode()))
         return _FakeResp(204)
 
-    with patch("discord_notifier.sender.urlrequest.urlopen", side_effect=fake_urlopen):
+    with patch("discord_alert_transport.sender.urlrequest.urlopen", side_effect=fake_urlopen):
         sender.send_embed(
             Channel.ALERTS,
             build_embed(title="HALT", description="loss", color=0xFF0000),
@@ -242,7 +242,7 @@ def test_send_text_plain():
         captured.append(json.loads(req.data.decode()))
         return _FakeResp(204)
 
-    with patch("discord_notifier.sender.urlrequest.urlopen", side_effect=fake_urlopen):
+    with patch("discord_alert_transport.sender.urlrequest.urlopen", side_effect=fake_urlopen):
         ok = sender.send_text(Channel.DEV, "hello world")
     assert ok is True
     assert captured[0]["content"] == "hello world"
@@ -256,8 +256,8 @@ def test_send_embed_5xx_exhausts_max_retries():
         raise _http_error(503, {})
 
     sleeps: list[float] = []
-    with patch("discord_notifier.sender.urlrequest.urlopen", side_effect=fake_urlopen), \
-         patch("discord_notifier.sender.time.sleep", side_effect=lambda s: sleeps.append(s)):
+    with patch("discord_alert_transport.sender.urlrequest.urlopen", side_effect=fake_urlopen), \
+         patch("discord_alert_transport.sender.time.sleep", side_effect=lambda s: sleeps.append(s)):
         ok = sender.send_embed(Channel.ALERTS, build_embed(title="t", description="d", color=0))
     assert ok is False
     # With max_retries=3, two retries happen before final drop (attempts 1,2 sleep; attempt 3 returns False).
@@ -278,8 +278,8 @@ def test_retry_after_malformed_body_defaults_to_1s():
         )
 
     sleeps: list[float] = []
-    with patch("discord_notifier.sender.urlrequest.urlopen", side_effect=fake_urlopen), \
-         patch("discord_notifier.sender.time.sleep", side_effect=lambda s: sleeps.append(s)):
+    with patch("discord_alert_transport.sender.urlrequest.urlopen", side_effect=fake_urlopen), \
+         patch("discord_alert_transport.sender.time.sleep", side_effect=lambda s: sleeps.append(s)):
         ok = sender.send_embed(Channel.ALERTS, build_embed(title="t", description="d", color=0))
     assert ok is False
     assert sleeps and all(0.9 < s < 1.5 for s in sleeps), f"fallback sleep should be ~1s, got {sleeps}"
@@ -293,7 +293,7 @@ def test_explicit_allowed_mentions_with_empty_content():
         captured.append(json.loads(req.data.decode()))
         return _FakeResp(204)
 
-    with patch("discord_notifier.sender.urlrequest.urlopen", side_effect=fake_urlopen):
+    with patch("discord_alert_transport.sender.urlrequest.urlopen", side_effect=fake_urlopen):
         sender.send_embed(
             Channel.ALERTS,
             build_embed(title="t", description="d", color=0),
@@ -312,7 +312,7 @@ def test_explicit_allowed_mentions_overrides_default_when_content_set():
         captured.append(json.loads(req.data.decode()))
         return _FakeResp(204)
 
-    with patch("discord_notifier.sender.urlrequest.urlopen", side_effect=fake_urlopen):
+    with patch("discord_alert_transport.sender.urlrequest.urlopen", side_effect=fake_urlopen):
         sender.send_embed(
             Channel.ALERTS,
             build_embed(title="t", description="d", color=0),
@@ -334,7 +334,7 @@ def test_str_channel_keys_supported():
         calls.append(req.full_url)
         return _FakeResp(204)
 
-    with patch("discord_notifier.sender.urlrequest.urlopen", side_effect=fake_urlopen):
+    with patch("discord_alert_transport.sender.urlrequest.urlopen", side_effect=fake_urlopen):
         ok = sender.send_embed("alerts", build_embed(title="t", description="d", color=0))
     assert ok is True
     assert WEBHOOK_ALERTS in calls

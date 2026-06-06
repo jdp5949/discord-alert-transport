@@ -1,15 +1,15 @@
-# discord-notifier
+# discord-alert-transport
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](#)
 [![Zero dependencies](https://img.shields.io/badge/runtime%20deps-0-brightgreen.svg)](#)
-[![Docs](https://img.shields.io/badge/docs-github.io-blue.svg)](https://jdp5949.github.io/discord/)
+[![Docs](https://img.shields.io/badge/docs-github.io-blue.svg)](https://jdp5949.github.io/discord-alert-transport/)
 
 **Portable Discord webhook transport. One Python package, ten language
 references. From "hello world" to severity-routed phone alerts in 3
 minutes.**
 
-📖 **Full documentation:** <https://jdp5949.github.io/discord/>
+📖 **Full documentation:** <https://jdp5949.github.io/discord-alert-transport/>
 
 ---
 
@@ -43,7 +43,7 @@ This repo gives you:
 ## Install (Python)
 
 ```bash
-pip install git+https://github.com/jdp5949/discord
+pip install git+https://github.com/jdp5949/discord-alert-transport
 ```
 
 (PyPI release pending — for now install from git.)
@@ -53,7 +53,7 @@ Requirements: Python 3.10+. Zero runtime dependencies.
 ## Hello, world
 
 ```python
-from discord_notifier import Channel, DiscordSender, build_embed
+from discord_alert_transport import Channel, DiscordSender, build_embed
 
 s = DiscordSender(
     webhooks={Channel.ALERTS: "https://discord.com/api/webhooks/.../..."},
@@ -61,7 +61,7 @@ s = DiscordSender(
 )
 s.send_embed(
     Channel.ALERTS,
-    build_embed(title="Hello", description="From discord-notifier", color=0x00cc66),
+    build_embed(title="Hello", description="From discord-alert-transport", color=0x00cc66),
 )
 ```
 
@@ -107,13 +107,13 @@ languages.
 | `#audit` | mirror of all events | white |
 
 ```python
-from discord_notifier import Severity, channel_for, color_for
+from discord_alert_transport import Severity, channel_for, color_for
 
 notify(Severity.P0, "DB down", "Primary unreachable")
 notify(Severity.P2, "Cache miss spike", "Hit rate dipped to 60%")
 ```
 
-Full guide: [Severity routing](https://jdp5949.github.io/discord/severity-routing.html).
+Full guide: [Severity routing](https://jdp5949.github.io/discord-alert-transport/severity-routing.html).
 
 ## Features
 
@@ -135,7 +135,7 @@ Full guide: [Severity routing](https://jdp5949.github.io/discord/severity-routin
 ## Layout
 
 ```
-src/discord_notifier/
+src/discord_alert_transport/
     __init__.py          public API
     channels.py          Channel + Severity enums + routing helpers
     embed.py             length-safe embed builder
@@ -165,11 +165,11 @@ pytest
 ## Documentation site
 
 Full hosted documentation, including use cases, production patterns,
-and the underlying webhook protocol: **<https://jdp5949.github.io/discord/>**
+and the underlying webhook protocol: **<https://jdp5949.github.io/discord-alert-transport/>**
 
 ## Use cases
 
-25+ documented in [use cases](https://jdp5949.github.io/discord/use-cases.html).
+25+ documented in [use cases](https://jdp5949.github.io/discord-alert-transport/use-cases.html).
 Highlights:
 
 - CI/CD pass/fail notifications

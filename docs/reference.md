@@ -192,4 +192,4 @@ On 429:
 
 - [Discord webhook docs (official)](https://discord.com/developers/docs/resources/webhook)
 - [Embed visualizer (online)](https://discohook.org/) — paste payload, see what it'll look like
-- [This repo](https://github.com/jdp5949/discord)
+- [This repo](https://github.com/jdp5949/discord-alert-transport)

@@ -1,15 +1,15 @@
 ---
-title: discord-notifier
+title: discord-alert-transport
 ---
 
-# discord-notifier
+# discord-alert-transport
 
 **Portable Discord webhook transport for every language and any
 application — Python package + 10-language reference + production
 patterns for severity routing, rate-limit backoff, audit history, and
 secret hygiene.**
 
-[GitHub repo](https://github.com/jdp5949/discord) · [PyPI-ready Python package](https://github.com/jdp5949/discord/tree/main/src/discord_notifier) · [10 language examples](https://github.com/jdp5949/discord/tree/main/examples)
+[GitHub repo](https://github.com/jdp5949/discord-alert-transport) · [PyPI-ready Python package](https://github.com/jdp5949/discord-alert-transport/tree/main/src/discord_alert_transport) · [10 language examples](https://github.com/jdp5949/discord-alert-transport/tree/main/examples)
 
 ---
 
@@ -27,7 +27,7 @@ curl -X POST -H "Content-Type: application/json" \
 
 This repo ships:
 
-1. A **Python package** (`discord_notifier`) with batteries — severity
+1. A **Python package** (`discord_alert_transport`) with batteries — severity
    routing, 429 backoff, audit-channel mirror, secret-safe logging.
 2. **10 language reference implementations** — Python, JS, TS, Go, Rust,
    Bash, PHP, Ruby, Java, C# — so you can drop the same idiom into any
@@ -64,19 +64,19 @@ This repo ships:
 ## Install (Python)
 
 ```bash
-pip install discord-notifier
+pip install discord-alert-transport
 ```
 
 Or from this repo:
 
 ```bash
-pip install git+https://github.com/jdp5949/discord
+pip install git+https://github.com/jdp5949/discord-alert-transport
 ```
 
 ## Hello, world
 
 ```python
-from discord_notifier import Channel, DiscordSender, build_embed
+from discord_alert_transport import Channel, DiscordSender, build_embed
 
 s = DiscordSender(
     webhooks={Channel.ALERTS: "https://discord.com/api/webhooks/.../..."},
@@ -84,7 +84,7 @@ s = DiscordSender(
 )
 s.send_embed(
     Channel.ALERTS,
-    build_embed(title="Hello", description="From discord-notifier", color=0x00cc66),
+    build_embed(title="Hello", description="From discord-alert-transport", color=0x00cc66),
 )
 ```
 
@@ -94,4 +94,4 @@ Phone buzzes.
 
 ## Licence
 
-MIT. See [LICENSE](https://github.com/jdp5949/discord/blob/main/LICENSE).
+MIT. See [LICENSE](https://github.com/jdp5949/discord-alert-transport/blob/main/LICENSE).

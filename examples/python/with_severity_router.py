@@ -1,13 +1,13 @@
 """Severity-driven routing example.
 
 Demonstrates how to map an arbitrary application event onto the standard
-severity → channel routing supplied by discord_notifier.
+severity → channel routing supplied by discord_alert_transport.
 """
 from __future__ import annotations
 
 import os
 
-from discord_notifier import (
+from discord_alert_transport import (
     Channel,
     DiscordSender,
     Severity,

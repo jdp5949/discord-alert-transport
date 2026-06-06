@@ -17,7 +17,7 @@ the URL can post to your channel (they cannot read it, just post).
 ## 2. Install
 
 ```bash
-pip install discord-notifier
+pip install discord-alert-transport
 ```
 
 Python 3.10+. Zero runtime dependencies (stdlib only).
@@ -25,7 +25,7 @@ Python 3.10+. Zero runtime dependencies (stdlib only).
 ## 3. Send
 
 ```python
-from discord_notifier import Channel, DiscordSender, build_embed
+from discord_alert_transport import Channel, DiscordSender, build_embed
 
 s = DiscordSender(
     webhooks={
