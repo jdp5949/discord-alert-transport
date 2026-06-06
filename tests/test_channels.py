@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from discord_notifier import (
+from discord_alert_transport import (
     COLOR_DEV,
     COLOR_P0,
     COLOR_P1,

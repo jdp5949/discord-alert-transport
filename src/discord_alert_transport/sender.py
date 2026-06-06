@@ -5,7 +5,7 @@ secret-safe ``__repr__``, and warning-only failure mode (never raises).
 
 Typical usage::
 
-    from discord_notifier import Channel, DiscordSender, build_embed
+    from discord_alert_transport import Channel, DiscordSender, build_embed
 
     sender = DiscordSender(
         webhooks={
@@ -31,7 +31,7 @@ from typing import Any, Mapping
 from urllib import error as urlerror
 from urllib import request as urlrequest
 
-from discord_notifier.channels import Channel
+from discord_alert_transport.channels import Channel
 
 logger = logging.getLogger(__name__)
 

@@ -3,7 +3,7 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "discord-notifier"
+name = "discord-alert-transport"
 version = "0.1.0"
 description = "Portable Discord webhook notification transport with severity routing, 429 backoff, and audit mirror. Zero runtime dependencies."
 readme = "README.md"
@@ -32,16 +32,16 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/jdp5949/discord"
-Documentation = "https://jdp5949.github.io/discord/"
-Issues = "https://github.com/jdp5949/discord/issues"
-Repository = "https://github.com/jdp5949/discord"
+Homepage = "https://github.com/jdp5949/discord-alert-transport"
+Documentation = "https://jdp5949.github.io/discord-alert-transport/"
+Issues = "https://github.com/jdp5949/discord-alert-transport/issues"
+Repository = "https://github.com/jdp5949/discord-alert-transport"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
-discord_notifier = ["py.typed"]
+discord_alert_transport = ["py.typed"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import os
 
-from discord_notifier import Channel, DiscordSender, Severity, build_embed, channel_for, color_for
+from discord_alert_transport import Channel, DiscordSender, Severity, build_embed, channel_for, color_for
 
 
 def main() -> None:
@@ -31,13 +31,13 @@ def main() -> None:
         channel_for(sev),
         build_embed(
             title="Example P1 event",
-            description="discord-notifier basic example fired this embed.",
+            description="discord-alert-transport basic example fired this embed.",
             color=color_for(sev),
             fields=[
                 {"name": "Source", "value": "examples/basic.py", "inline": True},
                 {"name": "Severity", "value": sev.name, "inline": True},
             ],
-            footer="discord-notifier example",
+            footer="discord-alert-transport example",
         ),
     )
     print("sent — check #alerts")

@@ -1,11 +1,11 @@
-"""discord-notifier — portable Discord webhook transport.
+"""discord-alert-transport — portable Discord webhook transport.
 
 Zero runtime dependencies (stdlib only). Drop-in for any Python 3.10+ project
 that needs severity-routed alerting through Discord.
 
 Quick start::
 
-    from discord_notifier import DiscordSender, Channel, Severity, build_embed
+    from discord_alert_transport import DiscordSender, Channel, Severity, build_embed
 
     sender = DiscordSender(
         webhooks={
@@ -28,7 +28,7 @@ Quick start::
 """
 from __future__ import annotations
 
-from discord_notifier.channels import (
+from discord_alert_transport.channels import (
     COLOR_AUDIT,
     COLOR_DEV,
     COLOR_P0,
@@ -42,8 +42,8 @@ from discord_notifier.channels import (
     color_for,
     severity_label,
 )
-from discord_notifier.embed import build_embed
-from discord_notifier.sender import DiscordSender
+from discord_alert_transport.embed import build_embed
+from discord_alert_transport.sender import DiscordSender
 
 __all__ = [
     "DiscordSender",
